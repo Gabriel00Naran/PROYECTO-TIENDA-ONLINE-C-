@@ -1,0 +1,614 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="TienditaDeadpoolDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Almacen">
+          <Key>
+            <PropertyRef Name="AlmacenId" />
+          </Key>
+          <Property Name="AlmacenId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Almacen1" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Categoria">
+          <Key>
+            <PropertyRef Name="CategoriaId" />
+          </Key>
+          <Property Name="CategoriaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NombreCategoria" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Color">
+          <Key>
+            <PropertyRef Name="ColorId" />
+          </Key>
+          <Property Name="ColorId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Color1" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Modelo">
+          <Key>
+            <PropertyRef Name="ModeloId" />
+          </Key>
+          <Property Name="ModeloId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Modelo1" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Nuevo">
+          <Key>
+            <PropertyRef Name="NuevosId" />
+          </Key>
+          <Property Name="NuevosId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UsuarioId" Type="int" />
+          <Property Name="Titulo" Type="nvarchar" MaxLength="50" />
+          <Property Name="DescripcionCorta" Type="nvarchar" MaxLength="250" />
+          <Property Name="Image" Type="nvarchar" MaxLength="250" />
+          <Property Name="Content" Type="nvarchar(max)" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="Status" Type="int" />
+        </EntityType>
+        <EntityType Name="Orden">
+          <Key>
+            <PropertyRef Name="OrdenID" />
+          </Key>
+          <Property Name="OrdenID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrdenNombre" Type="nvarchar" MaxLength="50" />
+          <Property Name="OrdenFecha" Type="datetime" />
+          <Property Name="TipoPago" Type="nvarchar" MaxLength="50" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" />
+          <Property Name="ClienteNombre" Type="nvarchar" MaxLength="50" />
+          <Property Name="ClienteTelefono" Type="varchar" MaxLength="15" />
+          <Property Name="ClientEmail" Type="nvarchar" MaxLength="100" />
+          <Property Name="ClienteDirreccion" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="OrdenDetalle">
+          <Key>
+            <PropertyRef Name="OrdenID" />
+            <PropertyRef Name="ProductoID" />
+          </Key>
+          <Property Name="OrdenID" Type="int" Nullable="false" />
+          <Property Name="ProductoID" Type="int" Nullable="false" />
+          <Property Name="precio" Type="float" />
+          <Property Name="Cantidad" Type="int" />
+        </EntityType>
+        <EntityType Name="Producto">
+          <Key>
+            <PropertyRef Name="ProductoId" />
+          </Key>
+          <Property Name="ProductoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductoName" Type="nvarchar" MaxLength="250" />
+          <Property Name="Image" Type="nvarchar" MaxLength="250" />
+          <Property Name="Precio" Type="float" />
+          <Property Name="UsuarioId" Type="int" />
+          <Property Name="CategoriaId" Type="int" />
+          <Property Name="ColorId" Type="int" />
+          <Property Name="ModeloId" Type="int" />
+          <Property Name="AlmacenId" Type="int" />
+          <Property Name="VentaFechaIncial" Type="datetime" />
+          <Property Name="VentaFechaFinal" Type="datetime" />
+          <Property Name="IsNew" Type="int" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="UsuarioId" />
+          </Key>
+          <Property Name="UsuarioId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NombreUsuario" Type="varchar" MaxLength="50" />
+          <Property Name="Password" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Nuevo_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Nuevo" Type="Self.Nuevo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="Nuevo">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrdenDetalle_Orden">
+          <End Role="Orden" Type="Self.Orden" Multiplicity="1" />
+          <End Role="OrdenDetalle" Type="Self.OrdenDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orden">
+              <PropertyRef Name="OrdenID" />
+            </Principal>
+            <Dependent Role="OrdenDetalle">
+              <PropertyRef Name="OrdenID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrdenDetalle_Producto">
+          <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
+          <End Role="OrdenDetalle" Type="Self.OrdenDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="ProductoId" />
+            </Principal>
+            <Dependent Role="OrdenDetalle">
+              <PropertyRef Name="ProductoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Producto_Almacen">
+          <End Role="Almacen" Type="Self.Almacen" Multiplicity="0..1" />
+          <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Almacen">
+              <PropertyRef Name="AlmacenId" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="AlmacenId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Producto_Categoria">
+          <End Role="Categoria" Type="Self.Categoria" Multiplicity="0..1" />
+          <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categoria">
+              <PropertyRef Name="CategoriaId" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="CategoriaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Producto_Color">
+          <End Role="Color" Type="Self.Color" Multiplicity="0..1" />
+          <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Color">
+              <PropertyRef Name="ColorId" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="ColorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Producto_Modelo">
+          <End Role="Modelo" Type="Self.Modelo" Multiplicity="0..1" />
+          <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Modelo">
+              <PropertyRef Name="ModeloId" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="ModeloId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Producto_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TienditaDeadpoolDBModelStoreContainer">
+          <EntitySet Name="Almacen" EntityType="Self.Almacen" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Categoria" EntityType="Self.Categoria" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Color" EntityType="Self.Color" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Modelo" EntityType="Self.Modelo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Nuevo" EntityType="Self.Nuevo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Orden" EntityType="Self.Orden" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrdenDetalle" EntityType="Self.OrdenDetalle" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Producto" EntityType="Self.Producto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Nuevo_Usuario" Association="Self.FK_Nuevo_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Nuevo" EntitySet="Nuevo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrdenDetalle_Orden" Association="Self.FK_OrdenDetalle_Orden">
+            <End Role="Orden" EntitySet="Orden" />
+            <End Role="OrdenDetalle" EntitySet="OrdenDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrdenDetalle_Producto" Association="Self.FK_OrdenDetalle_Producto">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="OrdenDetalle" EntitySet="OrdenDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Producto_Almacen" Association="Self.FK_Producto_Almacen">
+            <End Role="Almacen" EntitySet="Almacen" />
+            <End Role="Producto" EntitySet="Producto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Producto_Categoria" Association="Self.FK_Producto_Categoria">
+            <End Role="Categoria" EntitySet="Categoria" />
+            <End Role="Producto" EntitySet="Producto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Producto_Color" Association="Self.FK_Producto_Color">
+            <End Role="Color" EntitySet="Color" />
+            <End Role="Producto" EntitySet="Producto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Producto_Modelo" Association="Self.FK_Producto_Modelo">
+            <End Role="Modelo" EntitySet="Modelo" />
+            <End Role="Producto" EntitySet="Producto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Producto_Usuario" Association="Self.FK_Producto_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Producto" EntitySet="Producto" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TienditaDeadpoolDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Almacen">
+          <Key>
+            <PropertyRef Name="AlmacenId" />
+          </Key>
+          <Property Name="AlmacenId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Almacen1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Producto" Relationship="Self.FK_Producto_Almacen" FromRole="Almacen" ToRole="Producto" />
+        </EntityType>
+        <EntityType Name="Categoria">
+          <Key>
+            <PropertyRef Name="CategoriaId" />
+          </Key>
+          <Property Name="CategoriaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NombreCategoria" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Producto" Relationship="Self.FK_Producto_Categoria" FromRole="Categoria" ToRole="Producto" />
+        </EntityType>
+        <EntityType Name="Color">
+          <Key>
+            <PropertyRef Name="ColorId" />
+          </Key>
+          <Property Name="ColorId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Color1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Producto" Relationship="Self.FK_Producto_Color" FromRole="Color" ToRole="Producto" />
+        </EntityType>
+        <EntityType Name="Modelo">
+          <Key>
+            <PropertyRef Name="ModeloId" />
+          </Key>
+          <Property Name="ModeloId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Modelo1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Producto" Relationship="Self.FK_Producto_Modelo" FromRole="Modelo" ToRole="Producto" />
+        </EntityType>
+        <EntityType Name="Nuevo">
+          <Key>
+            <PropertyRef Name="NuevosId" />
+          </Key>
+          <Property Name="NuevosId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UsuarioId" Type="Int32" />
+          <Property Name="Titulo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DescripcionCorta" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Image" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="Status" Type="Int32" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK_Nuevo_Usuario" FromRole="Nuevo" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="Orden">
+          <Key>
+            <PropertyRef Name="OrdenID" />
+          </Key>
+          <Property Name="OrdenID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrdenNombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OrdenFecha" Type="DateTime" Precision="3" />
+          <Property Name="TipoPago" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ClienteNombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ClienteTelefono" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="ClientEmail" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ClienteDirreccion" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="OrdenDetalle" Relationship="Self.FK_OrdenDetalle_Orden" FromRole="Orden" ToRole="OrdenDetalle" />
+        </EntityType>
+        <EntityType Name="OrdenDetalle">
+          <Key>
+            <PropertyRef Name="OrdenID" />
+            <PropertyRef Name="ProductoID" />
+          </Key>
+          <Property Name="OrdenID" Type="Int32" Nullable="false" />
+          <Property Name="ProductoID" Type="Int32" Nullable="false" />
+          <Property Name="precio" Type="Double" />
+          <Property Name="Cantidad" Type="Int32" />
+          <NavigationProperty Name="Orden" Relationship="Self.FK_OrdenDetalle_Orden" FromRole="OrdenDetalle" ToRole="Orden" />
+          <NavigationProperty Name="Producto" Relationship="Self.FK_OrdenDetalle_Producto" FromRole="OrdenDetalle" ToRole="Producto" />
+        </EntityType>
+        <EntityType Name="Producto">
+          <Key>
+            <PropertyRef Name="ProductoId" />
+          </Key>
+          <Property Name="ProductoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductoName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Image" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Precio" Type="Double" />
+          <Property Name="UsuarioId" Type="Int32" />
+          <Property Name="CategoriaId" Type="Int32" />
+          <Property Name="ColorId" Type="Int32" />
+          <Property Name="ModeloId" Type="Int32" />
+          <Property Name="AlmacenId" Type="Int32" />
+          <Property Name="VentaFechaIncial" Type="DateTime" Precision="3" />
+          <Property Name="VentaFechaFinal" Type="DateTime" Precision="3" />
+          <Property Name="IsNew" Type="Int32" />
+          <NavigationProperty Name="Almacen" Relationship="Self.FK_Producto_Almacen" FromRole="Producto" ToRole="Almacen" />
+          <NavigationProperty Name="Categoria" Relationship="Self.FK_Producto_Categoria" FromRole="Producto" ToRole="Categoria" />
+          <NavigationProperty Name="Color" Relationship="Self.FK_Producto_Color" FromRole="Producto" ToRole="Color" />
+          <NavigationProperty Name="Modelo" Relationship="Self.FK_Producto_Modelo" FromRole="Producto" ToRole="Modelo" />
+          <NavigationProperty Name="OrdenDetalle" Relationship="Self.FK_OrdenDetalle_Producto" FromRole="Producto" ToRole="OrdenDetalle" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK_Producto_Usuario" FromRole="Producto" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="UsuarioId" />
+          </Key>
+          <Property Name="UsuarioId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NombreUsuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Nuevo" Relationship="Self.FK_Nuevo_Usuario" FromRole="Usuario" ToRole="Nuevo" />
+          <NavigationProperty Name="Producto" Relationship="Self.FK_Producto_Usuario" FromRole="Usuario" ToRole="Producto" />
+        </EntityType>
+        <Association Name="FK_Producto_Almacen">
+          <End Role="Almacen" Type="Self.Almacen" Multiplicity="0..1" />
+          <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Almacen">
+              <PropertyRef Name="AlmacenId" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="AlmacenId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Producto_Categoria">
+          <End Role="Categoria" Type="Self.Categoria" Multiplicity="0..1" />
+          <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categoria">
+              <PropertyRef Name="CategoriaId" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="CategoriaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Producto_Color">
+          <End Role="Color" Type="Self.Color" Multiplicity="0..1" />
+          <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Color">
+              <PropertyRef Name="ColorId" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="ColorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Producto_Modelo">
+          <End Role="Modelo" Type="Self.Modelo" Multiplicity="0..1" />
+          <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Modelo">
+              <PropertyRef Name="ModeloId" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="ModeloId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nuevo_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Nuevo" Type="Self.Nuevo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="Nuevo">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrdenDetalle_Orden">
+          <End Role="Orden" Type="Self.Orden" Multiplicity="1" />
+          <End Role="OrdenDetalle" Type="Self.OrdenDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orden">
+              <PropertyRef Name="OrdenID" />
+            </Principal>
+            <Dependent Role="OrdenDetalle">
+              <PropertyRef Name="OrdenID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrdenDetalle_Producto">
+          <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
+          <End Role="OrdenDetalle" Type="Self.OrdenDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="ProductoId" />
+            </Principal>
+            <Dependent Role="OrdenDetalle">
+              <PropertyRef Name="ProductoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Producto_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TienditaDeadpoolDBEntities2" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Almacen" EntityType="Self.Almacen" />
+          <EntitySet Name="Categoria" EntityType="Self.Categoria" />
+          <EntitySet Name="Color" EntityType="Self.Color" />
+          <EntitySet Name="Modelo" EntityType="Self.Modelo" />
+          <EntitySet Name="Nuevo" EntityType="Self.Nuevo" />
+          <EntitySet Name="Orden" EntityType="Self.Orden" />
+          <EntitySet Name="OrdenDetalle" EntityType="Self.OrdenDetalle" />
+          <EntitySet Name="Producto" EntityType="Self.Producto" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" />
+          <AssociationSet Name="FK_Producto_Almacen" Association="Self.FK_Producto_Almacen">
+            <End Role="Almacen" EntitySet="Almacen" />
+            <End Role="Producto" EntitySet="Producto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Producto_Categoria" Association="Self.FK_Producto_Categoria">
+            <End Role="Categoria" EntitySet="Categoria" />
+            <End Role="Producto" EntitySet="Producto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Producto_Color" Association="Self.FK_Producto_Color">
+            <End Role="Color" EntitySet="Color" />
+            <End Role="Producto" EntitySet="Producto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Producto_Modelo" Association="Self.FK_Producto_Modelo">
+            <End Role="Modelo" EntitySet="Modelo" />
+            <End Role="Producto" EntitySet="Producto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nuevo_Usuario" Association="Self.FK_Nuevo_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Nuevo" EntitySet="Nuevo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrdenDetalle_Orden" Association="Self.FK_OrdenDetalle_Orden">
+            <End Role="Orden" EntitySet="Orden" />
+            <End Role="OrdenDetalle" EntitySet="OrdenDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrdenDetalle_Producto" Association="Self.FK_OrdenDetalle_Producto">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="OrdenDetalle" EntitySet="OrdenDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Producto_Usuario" Association="Self.FK_Producto_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Producto" EntitySet="Producto" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TienditaDeadpoolDBModelStoreContainer" CdmEntityContainer="TienditaDeadpoolDBEntities2">
+          <EntitySetMapping Name="Almacen">
+            <EntityTypeMapping TypeName="TienditaDeadpoolDBModel.Almacen">
+              <MappingFragment StoreEntitySet="Almacen">
+                <ScalarProperty Name="AlmacenId" ColumnName="AlmacenId" />
+                <ScalarProperty Name="Almacen1" ColumnName="Almacen1" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categoria">
+            <EntityTypeMapping TypeName="TienditaDeadpoolDBModel.Categoria">
+              <MappingFragment StoreEntitySet="Categoria">
+                <ScalarProperty Name="CategoriaId" ColumnName="CategoriaId" />
+                <ScalarProperty Name="NombreCategoria" ColumnName="NombreCategoria" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Color">
+            <EntityTypeMapping TypeName="TienditaDeadpoolDBModel.Color">
+              <MappingFragment StoreEntitySet="Color">
+                <ScalarProperty Name="ColorId" ColumnName="ColorId" />
+                <ScalarProperty Name="Color1" ColumnName="Color1" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Modelo">
+            <EntityTypeMapping TypeName="TienditaDeadpoolDBModel.Modelo">
+              <MappingFragment StoreEntitySet="Modelo">
+                <ScalarProperty Name="ModeloId" ColumnName="ModeloId" />
+                <ScalarProperty Name="Modelo1" ColumnName="Modelo1" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Nuevo">
+            <EntityTypeMapping TypeName="TienditaDeadpoolDBModel.Nuevo">
+              <MappingFragment StoreEntitySet="Nuevo">
+                <ScalarProperty Name="NuevosId" ColumnName="NuevosId" />
+                <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+                <ScalarProperty Name="Titulo" ColumnName="Titulo" />
+                <ScalarProperty Name="DescripcionCorta" ColumnName="DescripcionCorta" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orden">
+            <EntityTypeMapping TypeName="TienditaDeadpoolDBModel.Orden">
+              <MappingFragment StoreEntitySet="Orden">
+                <ScalarProperty Name="OrdenID" ColumnName="OrdenID" />
+                <ScalarProperty Name="OrdenNombre" ColumnName="OrdenNombre" />
+                <ScalarProperty Name="OrdenFecha" ColumnName="OrdenFecha" />
+                <ScalarProperty Name="TipoPago" ColumnName="TipoPago" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="ClienteNombre" ColumnName="ClienteNombre" />
+                <ScalarProperty Name="ClienteTelefono" ColumnName="ClienteTelefono" />
+                <ScalarProperty Name="ClientEmail" ColumnName="ClientEmail" />
+                <ScalarProperty Name="ClienteDirreccion" ColumnName="ClienteDirreccion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrdenDetalle">
+            <EntityTypeMapping TypeName="TienditaDeadpoolDBModel.OrdenDetalle">
+              <MappingFragment StoreEntitySet="OrdenDetalle">
+                <ScalarProperty Name="OrdenID" ColumnName="OrdenID" />
+                <ScalarProperty Name="ProductoID" ColumnName="ProductoID" />
+                <ScalarProperty Name="precio" ColumnName="precio" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Producto">
+            <EntityTypeMapping TypeName="TienditaDeadpoolDBModel.Producto">
+              <MappingFragment StoreEntitySet="Producto">
+                <ScalarProperty Name="ProductoId" ColumnName="ProductoId" />
+                <ScalarProperty Name="ProductoName" ColumnName="ProductoName" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Precio" ColumnName="Precio" />
+                <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+                <ScalarProperty Name="CategoriaId" ColumnName="CategoriaId" />
+                <ScalarProperty Name="ColorId" ColumnName="ColorId" />
+                <ScalarProperty Name="ModeloId" ColumnName="ModeloId" />
+                <ScalarProperty Name="AlmacenId" ColumnName="AlmacenId" />
+                <ScalarProperty Name="VentaFechaIncial" ColumnName="VentaFechaIncial" />
+                <ScalarProperty Name="VentaFechaFinal" ColumnName="VentaFechaFinal" />
+                <ScalarProperty Name="IsNew" ColumnName="IsNew" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuario">
+            <EntityTypeMapping TypeName="TienditaDeadpoolDBModel.Usuario">
+              <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+                <ScalarProperty Name="NombreUsuario" ColumnName="NombreUsuario" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

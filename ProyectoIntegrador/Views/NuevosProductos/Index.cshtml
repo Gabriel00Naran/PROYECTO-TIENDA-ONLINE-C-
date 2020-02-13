@@ -1,0 +1,56 @@
+﻿@model IEnumerable<ProyectoIntegrador.Models.Producto>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Lista General de edicion de Productos</h2>
+
+<p>
+    @Html.ActionLink("Agregar Un nuevo producto", "Create",null,new { @class = "btn btn-primary btn-lg btn-block" })
+</p>
+<table class="table table-striped table-dark">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductoName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Image)
+        </th>
+      
+        <th>
+            @Html.DisplayNameFor(model => model.VentaFechaIncial)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Categoria.NombreCategoria)
+        </th>
+      
+       
+       
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProductoName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Image)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VentaFechaIncial)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Categoria.NombreCategoria)
+        </td>
+      
+        <td>
+            @Html.ActionLink("Editar", "Edit", new { id=item.ProductoId },new { @class = "btn btn-success" }) |
+
+            @Html.ActionLink("Eliminar", "Delete", new { id=item.ProductoId },new { @class = "btn btn-danger" })
+        </td>
+    </tr>
+}
+
+</table>

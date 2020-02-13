@@ -1,0 +1,99 @@
+﻿@model ProyectoIntegrador.Models.Producto
+
+@{
+    ViewBag.Title = "Eliminacion de productos";
+}
+
+<h2>Eliminacion</h2>
+
+<h3>estas seguro que deceas eliminar</h3>
+<div>
+    <h4>Producto a eliminar</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductoName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductoName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Image)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Image)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Precio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Precio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VentaFechaIncial)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VentaFechaIncial)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsNew)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsNew)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Almacen.Almacen1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Almacen.Almacen1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Categoria.NombreCategoria)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Categoria.NombreCategoria)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Color.Color1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Color.Color1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Modelo.Modelo1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Modelo.Modelo1)
+        </dd>
+
+      
+
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("volver a la lista", "Index",new { @class = "btn btn-dark" })
+        </div>
+    }
+</div>

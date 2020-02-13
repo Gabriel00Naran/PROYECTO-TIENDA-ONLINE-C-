@@ -1,0 +1,81 @@
+﻿
+@model ProyectoIntegrador.Models.Orden
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Detalles de la Compra</h2>
+
+<div>
+    <h4>Orden : @Html.DisplayFor(model => model.OrdenID)</h4>
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OrdenFecha)  : @Html.DisplayFor(model => model.OrdenFecha)
+        </dt>
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TipoPago)  : @Html.DisplayFor(model => model.TipoPago)
+        </dt>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Status) : @Html.DisplayFor(model => model.Status)
+        </dt>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ClienteNombre) : @Html.DisplayFor(model => model.ClienteNombre)
+        </dt>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ClienteTelefono) : @Html.DisplayFor(model => model.ClienteTelefono)
+        </dt>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ClientEmail)  :  @Html.DisplayFor(model => model.ClientEmail)
+        </dt>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ClienteDirreccion)  : @Html.DisplayFor(model => model.ClienteDirreccion)
+        </dt>
+    </dl>
+</div>
+<table border="1" class="table-condensed">
+    <tr class="table-danger">
+        <th>Nombre del producto</th>
+        <th>Cantidad</th>
+        <th>Precio</th>
+        <th>Modelo</th>
+        <th>total</th>
+    </tr>
+    @foreach (var item in Model.OrdenDetalle)
+    {
+        <tr>
+            <td>@item.Producto.ProductoName</td>
+            <td>@item.Cantidad</td>
+            <td>@item.precio</td>
+            <td>@item.Producto.Modelo.Modelo1</td>
+
+
+            <td>
+                @{
+                    var total = String.Format("{0:N0}", (item.Cantidad * item.precio + item.precio * item.Cantidad * 12 / 100));
+                }
+                @total  USD
+            </td>
+
+        </tr>
+
+
+
+
+    }
+</table>
+<br>
+<p>
+    @Html.ActionLink("volver a la lista", "Index", null, new { @Class = "btn btn-success" })
+</p>
+

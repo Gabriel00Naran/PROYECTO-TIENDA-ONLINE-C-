@@ -1,0 +1,17 @@
+﻿@using ProyectoIntegrador.Models;
+@model List<Categoria>
+
+<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo">
+    <div class="bg-white py-2 collapse-inner rounded">
+        <h6 class="collapse-header">Lista Categorias:</h6>
+        @{
+            foreach (var item in Model)
+            {
+                <a class="collapse-item">
+                    @Html.ActionLink(item.NombreCategoria, "Index", "Producto", new { paginacion = 1, categoria = @item.CategoriaId }, null)
+                </a>
+            }
+        }
+    </div>
+</div>
+

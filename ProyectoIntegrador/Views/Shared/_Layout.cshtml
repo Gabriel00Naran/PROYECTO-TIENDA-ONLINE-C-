@@ -1,0 +1,134 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+
+    <title>TiendaPRO - @ViewBag.Title </title>
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    @Styles.Render("~/bundles/css")
+</head>
+
+<body id="page-top">
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-dark sidebar sidebar-dark accordion" id="accordionSidebar">
+            <!-- Sidebar - Brand -->
+            <div class="sidebar-dark d-flex align-items-center justify-content-center">
+                <img src="~/Media/DP.png" )" width="50" height="50" />
+                <div>@Html.ActionLink("DEADPOOL ONLINE STORE", "Index", "Home", new { area = "" }, new { @class = "sidebar-brand d-flex align-items-center justify-content-center" })</div>
+
+            </div>
+            <!-- Divider -->
+            <hr class="sidebar-dark">
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <h2>Categorias</h2>
+                </a>
+
+                <!-- Sidebar Toggler (Sidebar) -->
+                <div class="badge badge-pill badge-dark ">
+                    
+                    @Html.Action("CategoriasPartial", "Categorias", new { @class = "badge badge-dark" })
+                    
+                </div>
+                
+</ul>
+
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                    <!-- Sidebar Toggle (Topbar) -->
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+                    <!-- Topbar Navbar -->
+                    <nav class="align-items-md-end">
+                        @Html.ActionLink("Inicio", "Index", "Home", null, new { @Class = "btn btn-dark" })
+                        @Html.ActionLink(" Producto", "index", "Producto", null, new { @Class = "btn btn-dark" })
+                        @Html.ActionLink(" Nuevo Anuncio", "Index", "Nuevo", null, new { @Class = "btn btn-dark" })
+                        @Html.ActionLink(" AgregarProducto", "Index", "NuevosProductos", null, new { @Class = "btn btn-dark" })
+                        @Html.ActionLink(" Carrito ", "Index", "ShoppingCart", null, new { @Class = "btn btn-dark" })
+                        @Html.ActionLink(" Orden", "Index", "Orden", null, new { @Class = "btn btn-dark" })
+                        @Html.ActionLink("Acerca de", "About", "Home", null, new { @Class = "btn btn-dark" })
+                        @Html.ActionLink("Contacto", "Contact", "Home", null, new { @Class = "btn btn-dark" })
+
+                    </nav>
+
+
+                    <!-- Nav Item - User Information -->
+
+                </nav>
+
+
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-xl-3 col-md-6 mb-4">
+
+
+                        </div>
+                        <!-- /.container-fluid -->
+                    </div>
+                    @RenderBody()
+                    <!-- End of Main Content -->
+                    <!-- Footer -->
+                    <footer class="sticky-footer bg-dark">
+                        <div class="container my-auto">
+                            <div class="copyright text-center my-auto">
+                                <span>Copyright &copy; TIENDA DEADPOOL 2020 TODOS LOS DERECHOS RESERVADOS Gabriel Naran DP</span>
+                            </div>
+                        </div>
+                    </footer>
+                    <!-- End of Footer -->
+                </div>
+                <!-- End of Content Wrapper -->
+
+            </div>
+
+            <a class="scroll-to-top rounded" href="#page-top">
+                <i class="fas fa-angle-up"></i>
+            </a>
+            <!-- Logout Modal-->
+            <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                            <a class="btn btn-primary" href="login.html">Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/js")
+    @Scripts.Render("~/bundles/angular")
+    @Scripts.Render("~/bundles/jquery")
+    @RenderSection("scripts", required: false)
+
+</body>
+
+</html>

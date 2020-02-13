@@ -1,0 +1,34 @@
+﻿@model ProyectoIntegrador.Models.Producto
+@{
+    ViewBag.Title = "Detalles";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Detalles del Producto</h2>
+
+<div class="producto-detalle">
+    <table border="1"  class="table-info">
+        <tr>
+            <td>
+                <div class="btn-facebook">
+                    <img src='@Url.Content("~/Media/"+Model.Image)' width="500" height="500" />
+                </div>
+            </td>
+           </tr>
+    </table>
+    <div class="producto-detalle-content">
+
+        <div class="h5 mb-0 font-weight-bold text-gray-800"> Color: @Model.ProductoName  </div>
+        <div class="h5 mb-0 font-weight-bold text-gray-800">precio de: @(String.Format("{0:N0}", Model.Precio)) $ </div>
+        <div class="h5 mb-0 font-weight-bold text-gray-800">Capacidad: @Model.Almacen.Almacen1 </div>
+        <div class="h5 mb-0 font-weight-bold text-gray-800"> Modelo: @Model.Modelo.Modelo1  </div>
+        <div class="h5 mb-0 font-weight-bold text-gray-800"> Color: @Model.Color.Color1  </div>
+        <div class="h5 mb-0 font-weight-bold text-gray-800">
+        </div>
+
+       
+        <p> @Html.ActionLink("Añadir al Carrito", "OrdeneAhora", "ShoppingCart", new { id = Model.ProductoId }, new { @class = "btn btn-secondary btn-lg btn-block" })</p>
+        <p> @Html.ActionLink("continuar comprando?", "index", "Producto", null, new { @class = "btn btn-success" })</p>
+    </div>
+
+
+</div>
